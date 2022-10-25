@@ -1,0 +1,56 @@
+.auth-form__card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #121822;
+    height: 100vh;
+    color: #F5F7FA;
+}
+
+.auth-form__container {
+    width: 60%;
+    padding: 5%;
+}
+
+.auth-form__container input {
+    color: #E1E7FD !important;
+}
+
+.auth-form__container > div {
+    margin: 15px 0;
+}
+
+.auth-form__container > div > div > fieldset {
+    border-color: #204254 !important;
+}
+
+.auth-form__controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 5px 5px 10px #ccc;
+    padding: 10%;
+}
+
+.textfield__label {
+    color: #E1E7FD !important;
+}
+
+.link {
+    text-decoration: none;
+    color: #E1E7FD;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.link:hover,
+.text-highlight__secondary {
+    color: #B94A3E;
+}
+
+.reset-password__success {
+    margin-top: 30px;
+    max-width: 350px;
+}

@@ -1,0 +1,7 @@
+.dashboard-container {
+    box-sizing: border-box;
+}
+
+.dashboard-nav {
+    height: 100vh; 
+}
