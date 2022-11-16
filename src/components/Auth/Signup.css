@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #121822;
+    background-color: var(--dark);
     height: 100vh;
     color: #F5F7FA;
 }
@@ -40,12 +40,12 @@
 
 .link {
     text-decoration: none;
-    color: #E1E7FD;
+    color: #E1E7FD !important;
     text-align: center;
     margin: 10px auto;
+    transition: 0.5s;
 }
 
-.link:hover,
 .text-highlight__secondary {
     color: #B94A3E;
 }
@@ -53,4 +53,8 @@
 .reset-password__success {
     margin-top: 30px;
     max-width: 350px;
+}
+
+.card-container{
+    background-color: var(--dark);
 }

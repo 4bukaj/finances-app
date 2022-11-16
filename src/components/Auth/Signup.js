@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./Signup.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,30 +10,53 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { motion } from "framer-motion";
 
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const { signup } = useAuth();
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailEmpty, setEmailEmpty] = useState("");
+  const [passwordEmpty, setPasswordEmpty] = useState("");
+  const [password2Empty, setPassword2Empty] = useState("");
+
+  useEffect(() => {
+    if (emailEmpty && passwordEmpty && password2Empty) setLoading(false);
+    else setLoading(true);
+  }, [emailEmpty, passwordEmpty, password2Empty]);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match");
-    }
-
     try {
-      setError("");
+      if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+        return setPasswordError("Passwords do not match");
+      }
+      setEmailError("");
+      setPasswordError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
-    } catch {
-      setError("Failed to create an account");
+      navigate("/home");
+    } catch (error) {
+      switch (error.code) {
+        case "auth/invalid-email":
+          setEmailError("Invalid email address");
+          break;
+        case "auth/email-already-in-use":
+          setEmailError("Email is already taken");
+          break;
+        case "auth/weak-password":
+          setPasswordError("Password needs to be at least 6 characters");
+          break;
+        default:
+          setEmailError(error.message);
+          break;
+      }
     }
     setLoading(false);
   }
@@ -50,99 +73,144 @@ export default function Signup() {
     >
       <CssBaseline />
       <Grid item xs={12} sm={12} md={5} component={Paper} elevation={24} square>
-        <Box className="auth-form__card">
-          <Avatar sx={{ m: 1, bgcolor: "light.main", color: "dark.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h4" sx={{ color: "light.main" }}>
-            Sign Up
-          </Typography>
-          <Box
-            className="auth-form__container"
-            component="form"
-            autoComplete="off"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{
-              mt: 1,
-              display: "flex",
-              flexDirection: "column",
-            }}
+        <div className="card-container">
+          <motion.div
+            initial={{ x: "-100vw" }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.3, ease: "linear" }}
           >
-            <TextField
-              required
-              inputRef={emailRef}
-              name="email"
-              label="Email"
-              variant="outlined"
-              type={"email"}
-              InputLabelProps={{ className: "textfield__label" }}
-            />
+            <Box className="auth-form__card">
+              <Avatar sx={{ m: 1, bgcolor: "light.main", color: "dark.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography
+                component="h1"
+                variant="h4"
+                sx={{ color: "light.main" }}
+              >
+                Sign Up
+              </Typography>
+              <Box
+                className="auth-form__container"
+                component="form"
+                autoComplete="off"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{
+                  mt: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {emailError ? (
+                  <TextField
+                    error
+                    label="Email"
+                    helperText={emailError}
+                    required
+                    inputRef={emailRef}
+                    name="email"
+                    variant="outlined"
+                    type={"email"}
+                    onChange={(e) => {
+                      setEmailEmpty(e.target.value);
+                    }}
+                  />
+                ) : (
+                  <TextField
+                    required
+                    inputRef={emailRef}
+                    name="email"
+                    label="Email"
+                    variant="outlined"
+                    type={"email"}
+                    InputLabelProps={{ className: "textfield__label" }}
+                    onChange={(e) => {
+                      setEmailEmpty(e.target.value);
+                    }}
+                  />
+                )}
 
-            {error ? (
-              <TextField
-                error
-                id="outlined-error-helper-text"
-                label="Password"
-                helperText={error}
-                required
-                inputRef={passwordRef}
-                name="password"
-                variant="outlined"
-                type={"password"}
-              />
-            ) : (
-              <TextField
-                required
-                id="outlined-basic"
-                inputRef={passwordRef}
-                name="password"
-                label="Password"
-                variant="outlined"
-                type={"password"}
-                InputLabelProps={{ className: "textfield__label" }}
-              />
-            )}
+                {passwordError ? (
+                  <TextField
+                    error
+                    label="Password"
+                    helperText={passwordError}
+                    required
+                    inputRef={passwordRef}
+                    name="password"
+                    variant="outlined"
+                    type={"password"}
+                    onChange={(e) => {
+                      setPasswordEmpty(e.target.value);
+                    }}
+                  />
+                ) : (
+                  <TextField
+                    required
+                    inputRef={passwordRef}
+                    name="password"
+                    label="Password"
+                    variant="outlined"
+                    type={"password"}
+                    InputLabelProps={{ className: "textfield__label" }}
+                    onChange={(e) => {
+                      setPasswordEmpty(e.target.value);
+                    }}
+                  />
+                )}
 
-            {error ? (
-              <TextField
-                error
-                helperText={error}
-                id="outlined-error-helper-text"
-                label="Confirm Password"
-                variant="outlined"
-                type={"password"}
-                inputRef={passwordConfirmRef}
-                name="confirmpassword"
-              />
-            ) : (
-              <TextField
-                required
-                inputRef={passwordConfirmRef}
-                name="confirmpassword"
-                id="outlined-basic"
-                label="Confirm Password"
-                variant="outlined"
-                type={"password"}
-                InputLabelProps={{ className: "textfield__label" }}
-              />
-            )}
+                {passwordError ? (
+                  <TextField
+                    error
+                    helperText={passwordError}
+                    label="Confirm Password"
+                    variant="outlined"
+                    type={"password"}
+                    inputRef={passwordConfirmRef}
+                    name="confirmpassword"
+                    onChange={(e) => {
+                      setPassword2Empty(e.target.value);
+                    }}
+                  />
+                ) : (
+                  <TextField
+                    required
+                    inputRef={passwordConfirmRef}
+                    name="confirmpassword"
+                    label="Confirm Password"
+                    variant="outlined"
+                    type={"password"}
+                    InputLabelProps={{ className: "textfield__label" }}
+                    onChange={(e) => {
+                      setPassword2Empty(e.target.value);
+                    }}
+                  />
+                )}
 
-            <Button
-              endIcon={<HowToRegIcon />}
-              type="submit"
-              sx={{ marginTop: 3, marginBottom: 3, color: "light.main", padding: "10px" }}
-              variant="contained"
-              color="secondary"
-              disabled={loading}
-            >
-              CREATE AN ACCOUNT
-            </Button>
-            <Link to="/login" className="link">
-              Already have an account? <span className="text-highlight__secondary">Log In</span>
-            </Link>
-          </Box>
-        </Box>
+                <Button
+                  endIcon={<HowToRegIcon />}
+                  type="submit"
+                  sx={{
+                    marginTop: 3,
+                    marginBottom: 3,
+                    color: "light.main",
+                    padding: "10px",
+                  }}
+                  variant="contained"
+                  color="secondary"
+                  disabled={loading}
+                >
+                  CREATE AN ACCOUNT
+                </Button>
+                <Link to="/login" className="link">
+                  Already have an account?{" "}
+                  <span className="text-highlight__secondary">Log In</span>
+                </Link>
+              </Box>
+            </Box>
+          </motion.div>
+        </div>
       </Grid>
       <Grid
         item

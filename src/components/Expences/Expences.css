@@ -1,0 +1,62 @@
+.expences-container {
+  padding: 20px 30px;
+}
+
+.expences-container__controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid red;
+  margin-bottom: 20px;
+}
+
+.expences-container__expences {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  height: 80vh;
+}
+
+.expences-container__expences:hover {
+  overflow-y: auto;
+  cursor: grab;
+}
+
+.scrolling {
+  cursor: grabbing; /* styling while scrolling down */
+}
+
+.new-expence__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px 0 0 4px;
+  padding: 10px 4px;
+  height: 100%;
+  width: 15%;
+  transition: 0.5s ease;
+  background-color: var(--dark);
+  color: var(--light);
+  cursor: pointer;
+}
+
+.new-expence__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-expence__title {
+  font-size: 12px;
+}
+
+.select-box__container {
+  width: 85%;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

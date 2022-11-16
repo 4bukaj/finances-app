@@ -1,0 +1,53 @@
+.home-container {
+    height: 100vh;
+}
+
+.home-container > div {
+    margin-bottom: 30px;
+}
+
+.home__last-expenses {
+    background-color: var(--secondary);
+}
+
+.home__top-row.container{
+    display: flex;
+    height: auto;
+}
+
+.home__top-row.icon-container{
+    background-color: var(--primary);
+    border-radius: 50%;
+    padding: 8px;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home__top-row.icon-container > *{
+    font-size: 35px;
+    color: var(--light)
+}
+
+.home__top-row.titles{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.home__top-row.main-title{
+    font-size: 35px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.home__top-row.sub-title{
+    font-size: 14px;
+    color: gray;
+    position: relative;
+    top: -10px;
+}
+
