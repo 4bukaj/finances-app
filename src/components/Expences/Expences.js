@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Expences.css";
 import ExpenceItem from "./ExpenceItem";
 import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import AddNewExpence from "../AddNewExpence/AddNewExpence";
 import ExpencesFilterType from "./ExpencesFilterType";
@@ -55,8 +55,15 @@ export default function Expences(props) {
   //NEW EXPENSE POPUP
   const [isOpen, setIsOpen] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  //FIRESTORE COLLECTION
   const transactionsCollectionRef = collection(db, "transactions");
   const { currentUser } = useAuth();
+  const filterByUserQuery = query(
+    transactionsCollectionRef,
+    where("userID", "==", currentUser.uid)
+  );
+
+  //OTHER
   const [refreshKey, setRefreshKey] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState("thisMonth");
   const [sortByMonth, setSortByMonth] = useState(monthToday);
@@ -70,7 +77,7 @@ export default function Expences(props) {
   //PULLING TRANSACTIONS FROM FIREBASE
   useEffect(() => {
     const getTransactions = async () => {
-      const data = await getDocs(transactionsCollectionRef);
+      const data = await getDocs(filterByUserQuery);
       setTransactions(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
@@ -101,7 +108,6 @@ export default function Expences(props) {
   //COUNT MONEY SPENT THIS MONTH
   transactions.forEach(function (e) {
     if (
-      currentUser.uid === e.userID &&
       new Date(e.date.seconds * 1000).getMonth() === monthToday &&
       new Date(e.date.seconds * 1000).getFullYear() === yearToday
     ) {
@@ -117,32 +123,21 @@ export default function Expences(props) {
         break;
       case "thisMonth":
         return (
-          currentUser.uid === e.userID &&
           new Date(e.date.seconds * 1000).getMonth() === monthToday &&
           new Date(e.date.seconds * 1000).getFullYear() === yearToday
         );
         break;
       case "thisYear":
+        return new Date(e.date.seconds * 1000).getFullYear() === yearToday;
+        break;
+      case "lastMonth":
         return (
-          currentUser.uid === e.userID &&
+          new Date(e.date.seconds * 1000).getMonth() === monthToday - 1 &&
           new Date(e.date.seconds * 1000).getFullYear() === yearToday
         );
         break;
-      case "byMonth":
-        return (
-          currentUser.uid === e.userID &&
-          new Date(e.date.seconds * 1000).getMonth() === sortByMonth &&
-          new Date(e.date.seconds * 1000).getFullYear() === yearToday
-        );
-        break;
-      case "byYear":
-        return (
-          currentUser.uid === e.userID &&
-          new Date(e.date.seconds * 1000).getFullYear() === sortByYear
-        );
-        break;
-      case "byCategory":
-        return currentUser.uid === e.userID && e.category === sortByCategory;
+      case "lastYear":
+        return new Date(e.date.seconds * 1000).getFullYear() === yearToday - 1;
         break;
     }
   });
@@ -167,6 +162,7 @@ export default function Expences(props) {
         open={isOpen}
         onClose={() => setIsOpen(false)}
         onUpdate={updateRefreshKey}
+        addNewExpence
       ></AddNewExpence>
       <div className="expences-container__controls">
         <div className="new-expence__container" onClick={() => setIsOpen(true)}>

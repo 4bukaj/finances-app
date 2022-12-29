@@ -1,0 +1,19 @@
+.crypto-portfolio-container {
+  border: 1px solid red;
+}
+
+.coins-portfolio-header > div {
+  width: 27%;
+  text-align: left;
+  font-weight: 700;
+  border: 1px solid red;
+  text-align: right;
+}
+
+.righty {
+  text-align: right !important;
+}
+
+.coins-portfolio-header > div:first-child {
+  width: 19%;
+}

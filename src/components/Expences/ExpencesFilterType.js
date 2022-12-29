@@ -48,11 +48,10 @@ export default function ExpencesFilterType(props) {
           }}
         >
           <option value="thisMonth">This month</option>
+          <option value="lastMonth">Last month</option>
           <option value="thisYear">This year</option>
+          <option value="lastYear">Last year</option>
           <option value="all">All</option>
-          <option value="byMonth">Filter by month</option>
-          <option value="byYear">Filter by year</option>
-          <option value="byCategory">Filter by category</option>
         </select>
       </motion.div>
       <ExpencesFilter

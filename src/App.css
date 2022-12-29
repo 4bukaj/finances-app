@@ -1,71 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
 :root {
-    --primary: #204254;
-    --secondary: #B94A3E;
-    --dark: #121B22;
-    --light: #E1E7FD;
+  --primary: #204254;
+  --secondary: #b94a3e;
+  --dark: #121b22;
+  --light: #e1e7fd;
 }
 
 .dark-btn {
-    background-color: var(--dark);
-    outline: none;
-    color: var(--light);
-    padding: 10px 50px;
-    border-radius: 4px;
-    border: 0;
-    cursor: pointer;
-    transition: background-color 0.7s linear;
+  background-color: var(--dark);
+  outline: none;
+  color: var(--light);
+  padding: 10px 50px;
+  border-radius: 4px;
+  border: 0;
+  cursor: pointer;
+  transition: background-color 0.7s linear;
 }
 
 .dark-btn:hover {
-    background-color: var(--primary);
+  background-color: var(--primary);
 }
 
-.dark-btn:disabled{
-    background-color: #c9caca;
-    color: gray;
-    cursor: default;
+.dark-btn:disabled {
+  background-color: #c9caca;
+  color: gray;
+  cursor: default;
 }
 
-button:disabled{
+button:disabled {
   background-color: #c9caca !important;
   color: gray !important;
   opacity: 0.4;
 }
 
 select {
-    background-color: var(--dark);
-    color: var(--light);
-    outline: none;
-    border: 0;
-    border-radius: 4px;
-    padding: 10px 10px;
-    cursor: pointer;
+  background-color: var(--dark);
+  color: var(--light);
+  outline: none;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px 10px;
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: rgb(215, 215, 215); 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: var(--primary); 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--secondary); 
-  }
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(215, 215, 215);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
+
+.bold {
+  font-weight: 700;
+}

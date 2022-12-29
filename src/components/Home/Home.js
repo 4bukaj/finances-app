@@ -3,23 +3,8 @@ import "./Home.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import TopRowItem from "./TopRowItem";
-import SavingsIcon from "@mui/icons-material/Savings";
-import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import PercentIcon from "@mui/icons-material/Percent";
 import Expences from "../Expences/Expences";
-import HomeChart from "../Charts/HomeChart";
-import HomePieChart from "../Charts/HomePieChart"
-
-const topRowItems = [
-  { icon: <SavingsIcon />, mainTitle: "100", subTitle: "Your savings" },
-  {
-    icon: <ShoppingCartCheckoutIcon />,
-    mainTitle: 2137,
-    subTitle: "Spent this month",
-  },
-  { icon: <PercentIcon />, mainTitle: 33, subTitle: "Idk" },
-];
+import HomePieChart from "../Charts/HomePieChart";
 
 export default function Home() {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
@@ -44,7 +29,13 @@ export default function Home() {
               expenses={filteredTransactions}
               selectedFilter={selectedFilter}
             /> */}
-            <HomePieChart expenses={filteredTransactions}/>
+            {filteredTransactions.length > 0 ? (
+              <HomePieChart expenses={filteredTransactions} />
+            ) : (
+              <div className="noTransactions">
+                <h3>No transactions found!</h3>
+              </div>
+            )}
           </Row>
         </Col>
         {/* --------------SECOND COLUMN------------------------------- */}

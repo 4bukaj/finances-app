@@ -5,10 +5,7 @@ import ExpenceCategory from "./ExpenceCategory";
 
 export default function ExpenceRow(props) {
   const [refreshKey, setRefreshKey] = useState(0);
-  const handleRefreshKeyUpdate = () => {
-    setRefreshKey(refreshKey + 1);
-  };
-
+  
   useEffect(() => {
     props.onUpdate(refreshKey);
   }, [refreshKey]);
@@ -19,7 +16,7 @@ export default function ExpenceRow(props) {
       <ExpenceCategory
         category={props.category}
         expenceID={props.expenceID}
-        onTransactionRemove={handleRefreshKeyUpdate}
+        onTransactionRemove={() => {setRefreshKey(refreshKey + 1);}}
       />
       <div className="expence-item__row">
         <div className="expence-item__col">

@@ -26,11 +26,11 @@
   display: flex;
   overflow-x: scroll;
   cursor: grab;
-margin-bottom: 50px;;
+  margin-bottom: 50px;
 }
 
-.modal-form__category:active{
-    cursor: grabbing;
+.modal-form__category:active {
+  cursor: grabbing;
 }
 
 .modal-form__category::-webkit-scrollbar {

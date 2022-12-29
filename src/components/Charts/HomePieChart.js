@@ -4,6 +4,7 @@ import PieChart from "../Charts/PieChart";
 import { categoriesList } from "../Expences/ExpencesCategories";
 
 export default function HomePieChart(props) {
+
   const chartDataPoints = [];
   const [hideDetails, setHideDetails] = useState(false);
   let totalSum = 0;
@@ -19,10 +20,12 @@ export default function HomePieChart(props) {
 
   //FIND CATEGORIES AND ASSIGN VALUES FROM EXPENSES
   for (const expense of props.expenses) {
+    let expenseAmount = Number(expense.amount);
     chartDataPoints.find((category) => {
       return category.title === expense.category;
-    }).value += Number(Number(expense.amount).toFixed(2));
-    totalSum += Number(Number(expense.amount).toFixed(2));
+    }).value += expenseAmount;
+    totalSum += expenseAmount;
+    totalSum = Math.round(totalSum * 100) / 100;
   }
 
   //REMOVE CATEGORIES WITH 0 VALUE

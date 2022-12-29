@@ -3,6 +3,7 @@ import "./ChartsDashboard.css";
 import { PieChart } from "react-minimal-pie-chart";
 
 export default function Charts(props) {
+
   return (
     <div className="outter-outline">
       <PieChart

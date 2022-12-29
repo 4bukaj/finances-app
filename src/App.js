@@ -9,7 +9,7 @@ import PrivateRoute from "./components/Auth/PrivateRoute";
 import ResetPassword from "./components/Auth/ResetPassword";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ChartsDashboard from "./components/Charts/ChartsDashboard";
-import About from "./components/About/About";
+import Crypto from "./components/Crypto/Crypto";
 import Home from "./components/Home/Home";
 
 const theme = createTheme({
@@ -46,7 +46,7 @@ function App() {
             >
               <Route path="/home" element={<Home />} />
               <Route path="/charts" element={<ChartsDashboard />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/crypto" element={<Crypto />} />
             </Route>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
