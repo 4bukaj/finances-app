@@ -8,14 +8,15 @@ export default function Chart(props) {
 
   return (
     <div className="chart-container">
-      {props.dataPoints.map((dataPoint) => (
+      {/* {props.dataPoints.map((dataPoint) => (
         <ChartBar
           key={dataPoint.label}
           value={dataPoint.value}
           maxValue={totalMax}
           label={dataPoint.label}
         />
-      ))}
+      ))} */}
+      Charts
     </div>
   );
 }

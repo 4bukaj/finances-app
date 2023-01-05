@@ -24,7 +24,8 @@ export default function HomeChart(props) {
 
   return (
     <div className="home-chart__container">
-      <Chart dataPoints={chartDataPoints} />;
+      {/* <Chart dataPoints={chartDataPoints} />; */}
+      Charts
     </div>
   );
 }

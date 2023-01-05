@@ -104,16 +104,16 @@ export default function Crypto() {
       />
       <div className="crypto-header">
         <HeaderItem
+          title="Current portfolio value"
+          number={currentInvestments}
+        />
+        <HeaderItem title="Total investments" number={totalInvestments} />
+        <HeaderItem
           title="Today's PNL"
           number={dailyPNLnum}
           percentage={dailyPNLpercentage}
           pnl
         />
-        <HeaderItem
-          title="Current portfolio value"
-          number={currentInvestments}
-        />
-        <HeaderItem title="Total investments" number={totalInvestments} />
         <HeaderItem
           title="All time's PNL "
           number={allTimePNLnum}
@@ -142,7 +142,7 @@ export default function Crypto() {
           <div className="coins-list-header righty">
             <h3 className="crypto-h3">Your portfolio</h3>
           </div>
-          <CryptoPortfolio crypto={crypto} />
+          <CryptoPortfolio crypto={crypto} allCoins={allCoins} />
         </div>
       </div>
     </div>

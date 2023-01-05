@@ -5,7 +5,7 @@ import { PieChart } from "react-minimal-pie-chart";
 export default function Charts() {
   return (
     <div className="outter-outline">
-      <PieChart
+      {/* <PieChart
         data={[
           { title: "One", value: 33, color: "#E38627" },
           { title: "Two", value: 33, color: "#C13C37" },
@@ -16,7 +16,8 @@ export default function Charts() {
         paddingAngle={2}
         animate={true}
         
-      />
+      /> */}
+      Charts
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import "./CoinsList.css";
 import CoinsListItem from "./CoinsListItem";
 
@@ -9,6 +10,9 @@ export default function CoinsList({ portfolioList, cryptoList }) {
     });
   });
 
+  portfolioList.sort(function (a, b) {
+    return b.date.seconds - a.date.seconds;
+  });
   return (
     <div>
       <div className="coins-list">

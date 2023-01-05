@@ -2,31 +2,44 @@ import React, { useState, useEffect } from "react";
 import "./CryptoPortfolio.css";
 import CryptoPortfolioItem from "./CryptoPortfolioItem";
 
-export default function CryptoPortfolio({ crypto }) {
+export default function CryptoPortfolio({ crypto, allCoins }) {
   const portfolio = [];
 
-  crypto.forEach((coin) => {
-    console.log(portfolio[coin.coin]);
-    //     if (!portfolio[coin.coin]) {
-    //       portfolio[coin.coin] = {
-    //         coin: coin.coin,
-    //         amount: Number(coin.amount),
-    //         value: Number(coin.value),
-    //         image: coin.image,
-    //       };
-    //     } else {
-    //       portfolio[coin.coin].value += Number(coin.value);
-    //       portfolio[coin.coin].amount += Number(coin.amount);
-    //     }
+  crypto.forEach((item) => {
+    let cur = portfolio.find((x) => x.coin === item.coin);
+    if (cur) {
+      cur.amount += Number(item.amount);
+      cur.value += Number(item.value);
+      cur.avgRate = (cur.avgRate + item.value / item.amount) / (cur.num + 1);
+    } else {
+      portfolio.push({
+        coin: item.coin,
+        amount: Number(item.amount),
+        value: Number(item.value),
+        image: item.image,
+        avgRate: item.value / item.amount,
+        num: 1,
+        pnl: 0,
+      });
+    }
   });
 
-  console.log(portfolio.length);
+  portfolio.forEach((item) => {
+    let curVal =
+      allCoins.find((x) => x.symbol === item.coin.toLowerCase()).current_price *
+      item.amount;
+    item.pnl = ((curVal - item.value) / item.value) * 100;
+  });
+
+  portfolio.sort(function (a, b) {
+    return b.value - a.value;
+  });
 
   return (
     <div className="coins-portfolio">
       <div className="coins-portfolio-header">
         <div>Crypto</div>
-        <div>Total amount</div>
+        <div>Total value</div>
         <div>Avg. rate</div>
         <div>PNL</div>
       </div>
@@ -36,9 +49,10 @@ export default function CryptoPortfolio({ crypto }) {
             <CryptoPortfolioItem
               key={coin.coin}
               coin={coin.coin}
-              amount={coin.amount}
               value={coin.value}
               image={coin.image}
+              avgRate={coin.avgRate}
+              pnl={coin.pnl}
             />
           );
         })
