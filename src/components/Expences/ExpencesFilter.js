@@ -74,11 +74,11 @@ export default function ExpencesFilter(props) {
             onChange={(event) => props.sortByYear(event.target.value)}
           >
             <option value={yearToday}>{yearToday}</option>
-            <option value={yearToday-1}>{yearToday-1}</option>
-            <option value={yearToday-2}>{yearToday-2}</option>
-            <option value={yearToday-3}>{yearToday-3}</option>
-            <option value={yearToday-4}>{yearToday-4}</option>
-            <option value={yearToday-5}>{yearToday-5}</option>
+            <option value={yearToday - 1}>{yearToday - 1}</option>
+            <option value={yearToday - 2}>{yearToday - 2}</option>
+            <option value={yearToday - 3}>{yearToday - 3}</option>
+            <option value={yearToday - 4}>{yearToday - 4}</option>
+            <option value={yearToday - 5}>{yearToday - 5}</option>
           </select>
         </motion.div>
       );
@@ -108,5 +108,3 @@ export default function ExpencesFilter(props) {
       break;
   }
 }
-
-//onChange={() => props.setEnteredCategory(props.id)}

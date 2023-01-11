@@ -5,10 +5,9 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function PrivateRoute({ children }) {
   const { currentUser } = useAuth();
 
-  if(currentUser !== 'loading') {
+  if (currentUser !== "loading") {
     return currentUser ? children : <Navigate to="/login" />;
-  }
-  else {
-    return <Navigate to="/" />;
+  } else {
+    return <Navigate to="/home" />;
   }
 }

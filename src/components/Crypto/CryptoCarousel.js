@@ -47,9 +47,18 @@ export default function CryptoCarousel() {
 
   const responsive = {
     0: {
-      items: 2,
+      items: 1,
     },
     512: {
+      items: 2,
+    },
+    720: {
+      items: 3,
+    },
+    840: {
+      items: 4,
+    },
+    1200: {
       items: 5,
     },
   };

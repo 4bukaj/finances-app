@@ -34,23 +34,38 @@ export default function Crypto() {
   //PULING CRYPTO FROM API
   const [allCoins, setAllCoins] = useState([]);
 
-  const fetchAllCoins = async () => {
-    const { data } = await axios.get(CoinList("PLN"));
+  // useEffect(() => {
+  //   const fetchAllCoins = async () => {
+  //     const { data } = await axios.get(CoinList("PLN"));
 
-    setAllCoins(data);
+  //     setAllCoins(data);
+  //   };
+  //   fetchAllCoins();
+  // }, []);
+
+  const config = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    },
   };
 
   useEffect(() => {
-    fetchAllCoins();
+    axios
+      .get(CoinList("PLN"), config)
+      .then((res) => {
+        setAllCoins(res.data);
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   //PULLING CRYPTO FROM FIREBASE
+
   useEffect(() => {
     const getCrypto = async () => {
       const data = await getDocs(filterByUserQuery);
       setCrypto(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-
     getCrypto();
   }, [refreshKey]);
 
@@ -103,23 +118,31 @@ export default function Crypto() {
         crypto={allCoins}
       />
       <div className="crypto-header">
-        <HeaderItem
-          title="Current portfolio value"
-          number={currentInvestments}
-        />
-        <HeaderItem title="Total investments" number={totalInvestments} />
-        <HeaderItem
-          title="Today's PNL"
-          number={dailyPNLnum}
-          percentage={dailyPNLpercentage}
-          pnl
-        />
-        <HeaderItem
-          title="All time's PNL "
-          number={allTimePNLnum}
-          percentage={allTimePNLpercentage}
-          pnl
-        />
+        <div className="crypto-header__container">
+          <HeaderItem
+            title="Current portfolio value"
+            number={currentInvestments}
+          />
+        </div>
+        <div className="crypto-header__container">
+          <HeaderItem title="Total investments" number={totalInvestments} />
+        </div>
+        <div className="crypto-header__container">
+          <HeaderItem
+            title="Today's PNL"
+            number={dailyPNLnum}
+            percentage={dailyPNLpercentage}
+            pnl
+          />
+        </div>
+        <div className="crypto-header__container">
+          <HeaderItem
+            title="All time's PNL "
+            number={allTimePNLnum}
+            percentage={allTimePNLpercentage}
+            pnl
+          />
+        </div>
       </div>
       <div className="crypto-carousel">
         <CryptoCarousel />

@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Home.css";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Expences from "../Expences/Expences";
-import HomePieChart from "../Charts/HomePieChart";
+import DoughnutChart from "../Charts/DoughnutChart";
 
 export default function Home() {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
@@ -16,35 +13,22 @@ export default function Home() {
   };
 
   return (
-    <Container fluid className="home-container">
-      <Row>
-        {/* --------------FIRST COLUMN------------------------------- */}
-        <Col
-          className="red"
-          xl={{ span: 7, order: "first" }}
-          lg={{ span: 12, order: "last" }}
-        >
-          <Row>
-            {/* <HomeChart
-              expenses={filteredTransactions}
-              selectedFilter={selectedFilter}
-            /> */}
-            {filteredTransactions.length > 0 ? (
-              <HomePieChart expenses={filteredTransactions} />
-            ) : (
-              <div className="noTransactions">
-                <h3>No transactions found!</h3>
-              </div>
-            )}
-          </Row>
-        </Col>
-        {/* --------------SECOND COLUMN------------------------------- */}
-        <Col className="red" xl={{ span: 5 }} lg={{ span: 12 }}>
-          <Row>
-            <Expences onFilterChange={handleImportFilteredTransactions} />
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+    <div className="home-container">
+      <div className="home-chart__container">
+        {filteredTransactions.length > 0 ? (
+          <DoughnutChart
+            data={filteredTransactions}
+            activeFilter={selectedFilter}
+          />
+        ) : (
+          <div className="noTransactions">
+            <h3>No transactions found!</h3>
+          </div>
+        )}
+      </div>
+      <div className="home-expenses__container">
+        <Expences onFilterChange={handleImportFilteredTransactions} />
+      </div>
+    </div>
   );
 }
