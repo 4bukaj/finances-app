@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Home.css";
 import Expences from "../Expences/Expences";
 import DoughnutChart from "../Charts/DoughnutChart";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
@@ -26,9 +27,14 @@ export default function Home() {
           </div>
         )}
       </div>
-      <div className="home-expenses__container">
+      <motion.div
+        className="home-expenses__container"
+        initial={{ y: "-100vw" }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: "linear" }}
+      >
         <Expences onFilterChange={handleImportFilteredTransactions} />
-      </div>
+      </motion.div>
     </div>
   );
 }

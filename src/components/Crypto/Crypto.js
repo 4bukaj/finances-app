@@ -36,27 +36,26 @@ export default function Crypto() {
 
   // useEffect(() => {
   //   const fetchAllCoins = async () => {
-  //     const { data } = await axios.get(CoinList("PLN"));
-
-  //     setAllCoins(data);
+  //     axios
+  //       .get(CoinList("PLN"))
+  //       .then((res) => {
+  //         setAllCoins(res.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
   //   };
   //   fetchAllCoins();
   // }, []);
 
-  const config = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    },
+  const fetchAllCoins = async () => {
+    const { data } = await axios.get(CoinList("PLN"));
+
+    setAllCoins(data);
   };
 
   useEffect(() => {
-    axios
-      .get(CoinList("PLN"), config)
-      .then((res) => {
-        setAllCoins(res.data);
-      })
-      .catch((error) => console.log(error));
+    fetchAllCoins();
   }, []);
 
   //PULLING CRYPTO FROM FIREBASE
@@ -81,20 +80,20 @@ export default function Crypto() {
       }
 
       //SUM OF CURRENT VALUE OF ALL ASSETS
-      allCoins.forEach((coin) => {
-        crypto.forEach((item) => {
-          if (item.coin === coin.symbol.toUpperCase()) {
-            sumCurr += Number(item.amount * coin.current_price);
-            sumYesterday += Number(
-              item.amount * (coin.current_price + coin.price_change_24h)
-            );
-          }
+      if (allCoins.length > 0) {
+        allCoins.forEach((coin) => {
+          crypto.forEach((item) => {
+            if (item.coin === coin.symbol.toUpperCase()) {
+              sumCurr += Number(item.amount * coin.current_price);
+              sumYesterday += Number(
+                item.amount * (coin.current_price + coin.price_change_24h)
+              );
+            }
+          });
         });
-      });
+      }
 
       //CALCULATE ALL TIME PNL
-      // sumCurr = 700.7;
-      // sumInv = 1086;
       let allPNLper = ((sumCurr - sumInv) / sumInv) * 100;
       let dailyPNLper = ((sumCurr - sumYesterday) / sumYesterday) * 100;
 

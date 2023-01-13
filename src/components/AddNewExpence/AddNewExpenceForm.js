@@ -60,7 +60,15 @@ export default function ModalForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const passDate = new Date(enteredDate);
+    const now = new Date();
+    const secs = now.getSeconds();
+    const mins = now.getMinutes() * 60;
+    const hours = now.getHours() * 3600;
+    const passDate = new Date(
+      (new Date(enteredDate).getTime() / 1000 + hours + mins + secs) * 1000
+    );
+
+    console.log(passDate);
 
     await addDoc(transactionsCollectionRef, {
       userID: currentUser.uid,
@@ -133,7 +141,12 @@ export default function ModalForm(props) {
           type="submit"
           className="dark-btn"
           onClick={() => props.onTransactionAdd()}
-          disabled={!enteredTitle || !enteredAmount || !enteredCategory || !enteredDate && true}
+          disabled={
+            !enteredTitle ||
+            !enteredAmount ||
+            !enteredCategory ||
+            (!enteredDate && true)
+          }
         >
           Add
         </button>

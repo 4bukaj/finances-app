@@ -106,38 +106,42 @@ export default function Expences(props) {
   };
 
   //FILTERING TRANSACTIONS ARRAY
-  const filteredTransactions = transactions.filter(function (e) {
-    switch (selectedFilter) {
-      case "all":
-        return currentUser.uid === e.userID;
-        break;
-      case "thisMonth":
-        return (
-          new Date(e.date.seconds * 1000).getMonth() === monthToday &&
-          new Date(e.date.seconds * 1000).getFullYear() === yearToday
-        );
-        break;
-      case "thisYear":
-        return new Date(e.date.seconds * 1000).getFullYear() === yearToday;
-        break;
-      case "lastMonth":
-        if (new Date().getMonth() === 0) {
+  const filteredTransactions = transactions
+    .filter(function (e) {
+      switch (selectedFilter) {
+        case "all":
+          return currentUser.uid === e.userID;
+          break;
+        case "thisMonth":
           return (
-            new Date(e.date.seconds * 1000).getMonth() === 11 &&
-            new Date(e.date.seconds * 1000).getFullYear() === yearToday - 1
-          );
-        } else {
-          return (
-            new Date(e.date.seconds * 1000).getMonth() === monthToday - 1 &&
+            new Date(e.date.seconds * 1000).getMonth() === monthToday &&
             new Date(e.date.seconds * 1000).getFullYear() === yearToday
           );
-        }
-        break;
-      case "lastYear":
-        return new Date(e.date.seconds * 1000).getFullYear() === yearToday - 1;
-        break;
-    }
-  }).sort();
+          break;
+        case "thisYear":
+          return new Date(e.date.seconds * 1000).getFullYear() === yearToday;
+          break;
+        case "lastMonth":
+          if (new Date().getMonth() === 0) {
+            return (
+              new Date(e.date.seconds * 1000).getMonth() === 11 &&
+              new Date(e.date.seconds * 1000).getFullYear() === yearToday - 1
+            );
+          } else {
+            return (
+              new Date(e.date.seconds * 1000).getMonth() === monthToday - 1 &&
+              new Date(e.date.seconds * 1000).getFullYear() === yearToday
+            );
+          }
+          break;
+        case "lastYear":
+          return (
+            new Date(e.date.seconds * 1000).getFullYear() === yearToday - 1
+          );
+          break;
+      }
+    })
+    .sort();
 
   //PASSING FILTERRED TRANSACTIONS ARRAY TO PARENT
   useEffect(() => {
